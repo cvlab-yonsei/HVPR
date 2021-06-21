@@ -76,12 +76,11 @@ For more information, checkout the project site [[website](https://cvlab.yonsei.
 
 ## Bibtex
 ```
-@inproceedings{park2020learning,
-  title={Learning Memory-guided Normality for Anomaly Detection},
-  author={Park, Hyunjong and Noh, Jongyoun and Ham, Bumsub},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={14372--14381},
-  year={2020}
+@article{noh2021hvpr,
+  title={HVPR: Hybrid Voxel-Point Representation for Single-stage 3D Object Detection},
+  author={Noh, Jongyoun and Lee, Sanghoon and Ham, Bumsub},
+  journal={arXiv preprint arXiv:2104.00902},
+  year={2021}
 }
 ```
 ## References
