@@ -1,6 +1,6 @@
 # PyTorch implementation of "HVPR: Hybrid Voxel-Point Representation for Single-stage 3D Object Detection"
 
-<p align="center"><img src="./HVPR_files/overview.png" alt="no_image" width="40%" height="40%" /><img src="./HVPR_files/teaser.png" alt="no_image" width="60%" height="60%" /></p>
+<p align="center"><img src="./HVPR_files/overview.png" alt="no_image" width="98%" height="60%" /></p>
 This is the implementation of the paper "HVPR: Hybrid Voxel-Point Representation for Single-stage 3D Object Detection (CVPR 2021)".
 
 Our code is mainly based on [`OpenPCDet`](https://github.com/open-mmlab/OpenPCDet). We also plan to release the code based on [`PointPillars`](https://github.com/nutonomy/second.pytorch). 
