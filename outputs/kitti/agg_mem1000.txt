@@ -1,0 +1,989 @@
+2020-10-07 11:10:26,701   INFO  **********************Start logging**********************
+2020-10-07 11:10:26,702   INFO  CUDA_VISIBLE_DEVICES=2,3
+2020-10-07 11:10:26,702   INFO  total_batch_size: 4
+2020-10-07 11:10:26,702   INFO  cfg_file         ./cfgs/kitti_models/mix_anchor_agg_memory.yaml
+2020-10-07 11:10:26,702   INFO  batch_size       2
+2020-10-07 11:10:26,703   INFO  workers          4
+2020-10-07 11:10:26,703   INFO  extra_tag        agg_mem1000
+2020-10-07 11:10:26,703   INFO  ckpt             None
+2020-10-07 11:10:26,703   INFO  launcher         pytorch
+2020-10-07 11:10:26,703   INFO  gpus             2,3
+2020-10-07 11:10:26,703   INFO  tcp_port         18888
+2020-10-07 11:10:26,703   INFO  local_rank       0
+2020-10-07 11:10:26,704   INFO  set_cfgs         None
+2020-10-07 11:10:26,704   INFO  max_waiting_mins 30
+2020-10-07 11:10:26,704   INFO  start_epoch      0
+2020-10-07 11:10:26,704   INFO  eval_tag         default
+2020-10-07 11:10:26,704   INFO  eval_all         True
+2020-10-07 11:10:26,704   INFO  ckpt_dir         None
+2020-10-07 11:10:26,704   INFO  save_to_file     False
+2020-10-07 11:10:26,705   INFO  cfg.ROOT_DIR: /workspace/work/OpenPCDet
+2020-10-07 11:10:26,705   INFO  cfg.LOCAL_RANK: 0
+2020-10-07 11:10:26,705   INFO  cfg.CLASS_NAMES: ['Car', 'Pedestrian', 'Cyclist']
+2020-10-07 11:10:26,705   INFO  
+cfg.DATA_CONFIG = edict()
+2020-10-07 11:10:26,705   INFO  cfg.DATA_CONFIG.DATASET: KittiDataset
+2020-10-07 11:10:26,705   INFO  cfg.DATA_CONFIG.DATA_PATH: ../data/kitti
+2020-10-07 11:10:26,706   INFO  cfg.DATA_CONFIG.POINT_CLOUD_RANGE: [0, -39.68, -3, 69.12, 39.68, 1]
+2020-10-07 11:10:26,706   INFO  
+cfg.DATA_CONFIG.DATA_SPLIT = edict()
+2020-10-07 11:10:26,706   INFO  cfg.DATA_CONFIG.DATA_SPLIT.train: train
+2020-10-07 11:10:26,706   INFO  cfg.DATA_CONFIG.DATA_SPLIT.test: val
+2020-10-07 11:10:26,706   INFO  
+cfg.DATA_CONFIG.INFO_PATH = edict()
+2020-10-07 11:10:26,706   INFO  cfg.DATA_CONFIG.INFO_PATH.train: ['kitti_infos_train.pkl']
+2020-10-07 11:10:26,707   INFO  cfg.DATA_CONFIG.INFO_PATH.test: ['kitti_infos_val.pkl']
+2020-10-07 11:10:26,707   INFO  cfg.DATA_CONFIG.FOV_POINTS_ONLY: True
+2020-10-07 11:10:26,707   INFO  
+cfg.DATA_CONFIG.DATA_AUGMENTOR = edict()
+2020-10-07 11:10:26,707   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.DISABLE_AUG_LIST: ['placeholder']
+2020-10-07 11:10:26,707   INFO  cfg.DATA_CONFIG.DATA_AUGMENTOR.AUG_CONFIG_LIST: [{'NAME': 'gt_sampling', 'USE_ROAD_PLANE': True, 'DB_INFO_PATH': ['kitti_dbinfos_train.pkl'], 'PREPARE': {'filter_by_min_points': ['Car:5', 'Pedestrian:5', 'Cyclist:5'], 'filter_by_difficulty': [-1]}, 'SAMPLE_GROUPS': ['Car:15', 'Pedestrian:15', 'Cyclist:15'], 'NUM_POINT_FEATURES': 4, 'DATABASE_WITH_FAKELIDAR': False, 'REMOVE_EXTRA_WIDTH': [0.0, 0.0, 0.0], 'LIMIT_WHOLE_SCENE': False}, {'NAME': 'random_world_flip', 'ALONG_AXIS_LIST': ['x']}, {'NAME': 'random_world_rotation', 'WORLD_ROT_ANGLE': [-0.78539816, 0.78539816]}, {'NAME': 'random_world_scaling', 'WORLD_SCALE_RANGE': [0.95, 1.05]}]
+2020-10-07 11:10:26,707   INFO  
+cfg.DATA_CONFIG.POINT_FEATURE_ENCODING = edict()
+2020-10-07 11:10:26,708   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.encoding_type: absolute_coordinates_encoding
+2020-10-07 11:10:26,708   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.used_feature_list: ['x', 'y', 'z', 'intensity']
+2020-10-07 11:10:26,708   INFO  cfg.DATA_CONFIG.POINT_FEATURE_ENCODING.src_feature_list: ['x', 'y', 'z', 'intensity']
+2020-10-07 11:10:26,708   INFO  cfg.DATA_CONFIG.DATA_PROCESSOR: [{'NAME': 'mask_points_and_boxes_outside_range', 'REMOVE_OUTSIDE_BOXES': True}, {'NAME': 'sample_points', 'NUM_POINTS': {'train': 16384, 'test': 16384}}, {'NAME': 'transform_points_to_voxels', 'VOXEL_SIZE': [0.16, 0.16, 4], 'MAX_POINTS_PER_VOXEL': 32, 'MAX_NUMBER_OF_VOXELS': {'train': 16000, 'test': 40000}}]
+2020-10-07 11:10:26,708   INFO  cfg.DATA_CONFIG._BASE_CONFIG_: cfgs/dataset_configs/kitti_dataset.yaml
+2020-10-07 11:10:26,708   INFO  
+cfg.MODEL = edict()
+2020-10-07 11:10:26,708   INFO  cfg.MODEL.NAME: MixAnchor_Memory
+2020-10-07 11:10:26,709   INFO  
+cfg.MODEL.BACKBONE_3D = edict()
+2020-10-07 11:10:26,709   INFO  cfg.MODEL.BACKBONE_3D.NAME: PointNet2MSG_NOFP
+2020-10-07 11:10:26,709   INFO  
+cfg.MODEL.BACKBONE_3D.SA_CONFIG = edict()
+2020-10-07 11:10:26,709   INFO  cfg.MODEL.BACKBONE_3D.SA_CONFIG.NPOINTS: [4096]
+2020-10-07 11:10:26,709   INFO  cfg.MODEL.BACKBONE_3D.SA_CONFIG.RADIUS: [[0.1, 0.5]]
+2020-10-07 11:10:26,709   INFO  cfg.MODEL.BACKBONE_3D.SA_CONFIG.NSAMPLE: [[16, 32]]
+2020-10-07 11:10:26,710   INFO  cfg.MODEL.BACKBONE_3D.SA_CONFIG.MLPS: [[[16, 16, 32], [32, 32, 64]]]
+2020-10-07 11:10:26,710   INFO  
+cfg.MODEL.VFE = edict()
+2020-10-07 11:10:26,710   INFO  cfg.MODEL.VFE.NAME: PillarVFE
+2020-10-07 11:10:26,710   INFO  cfg.MODEL.VFE.WITH_DISTANCE: False
+2020-10-07 11:10:26,710   INFO  cfg.MODEL.VFE.USE_ABSLOTE_XYZ: True
+2020-10-07 11:10:26,710   INFO  cfg.MODEL.VFE.USE_NORM: True
+2020-10-07 11:10:26,711   INFO  cfg.MODEL.VFE.NUM_FILTERS: [96]
+2020-10-07 11:10:26,711   INFO  
+cfg.MODEL.MAP_TO_BEV = edict()
+2020-10-07 11:10:26,711   INFO  cfg.MODEL.MAP_TO_BEV.NAME: PointPillarScatter_Agg_Memory
+2020-10-07 11:10:26,711   INFO  cfg.MODEL.MAP_TO_BEV.NUM_BEV_FEATURES: 192
+2020-10-07 11:10:26,711   INFO  cfg.MODEL.MAP_TO_BEV.NUM_PT_FEATURES: 96
+2020-10-07 11:10:26,711   INFO  cfg.MODEL.MAP_TO_BEV.NUM_COORD_POINTS: 3
+2020-10-07 11:10:26,711   INFO  cfg.MODEL.MAP_TO_BEV.NUM_K: 5
+2020-10-07 11:10:26,712   INFO  cfg.MODEL.MAP_TO_BEV.NUM_M: 1000
+2020-10-07 11:10:26,712   INFO  cfg.MODEL.MAP_TO_BEV.SHRINK_TH: 0.0025
+2020-10-07 11:10:26,712   INFO  
+cfg.MODEL.BACKBONE_2D = edict()
+2020-10-07 11:10:26,712   INFO  cfg.MODEL.BACKBONE_2D.NAME: BaseBEVBackbone
+2020-10-07 11:10:26,712   INFO  cfg.MODEL.BACKBONE_2D.LAYER_NUMS: [3, 5, 5]
+2020-10-07 11:10:26,712   INFO  cfg.MODEL.BACKBONE_2D.LAYER_STRIDES: [2, 2, 2]
+2020-10-07 11:10:26,712   INFO  cfg.MODEL.BACKBONE_2D.NUM_FILTERS: [192, 384, 768]
+2020-10-07 11:10:26,713   INFO  cfg.MODEL.BACKBONE_2D.UPSAMPLE_STRIDES: [1, 2, 4]
+2020-10-07 11:10:26,713   INFO  cfg.MODEL.BACKBONE_2D.NUM_UPSAMPLE_FILTERS: [128, 128, 128]
+2020-10-07 11:10:26,713   INFO  
+cfg.MODEL.DENSE_HEAD = edict()
+2020-10-07 11:10:26,713   INFO  cfg.MODEL.DENSE_HEAD.NAME: AnchorHeadSingle
+2020-10-07 11:10:26,713   INFO  cfg.MODEL.DENSE_HEAD.CLASS_AGNOSTIC: False
+2020-10-07 11:10:26,713   INFO  cfg.MODEL.DENSE_HEAD.USE_DIRECTION_CLASSIFIER: True
+2020-10-07 11:10:26,713   INFO  cfg.MODEL.DENSE_HEAD.DIR_OFFSET: 0.78539
+2020-10-07 11:10:26,714   INFO  cfg.MODEL.DENSE_HEAD.DIR_LIMIT_OFFSET: 0.0
+2020-10-07 11:10:26,714   INFO  cfg.MODEL.DENSE_HEAD.NUM_DIR_BINS: 2
+2020-10-07 11:10:26,714   INFO  cfg.MODEL.DENSE_HEAD.ANCHOR_GENERATOR_CONFIG: [{'class_name': 'Car', 'anchor_sizes': [[3.9, 1.6, 1.56]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-1.78], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.6, 'unmatched_threshold': 0.45}, {'class_name': 'Pedestrian', 'anchor_sizes': [[0.8, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}, {'class_name': 'Cyclist', 'anchor_sizes': [[1.76, 0.6, 1.73]], 'anchor_rotations': [0, 1.57], 'anchor_bottom_heights': [-0.6], 'align_center': False, 'feature_map_stride': 2, 'matched_threshold': 0.5, 'unmatched_threshold': 0.35}]
+2020-10-07 11:10:26,714   INFO  
+cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG = edict()
+2020-10-07 11:10:26,714   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NAME: AxisAlignedTargetAssigner
+2020-10-07 11:10:26,714   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.POS_FRACTION: -1.0
+2020-10-07 11:10:26,714   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.SAMPLE_SIZE: 512
+2020-10-07 11:10:26,715   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.NORM_BY_NUM_EXAMPLES: False
+2020-10-07 11:10:26,715   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.MATCH_HEIGHT: False
+2020-10-07 11:10:26,715   INFO  cfg.MODEL.DENSE_HEAD.TARGET_ASSIGNER_CONFIG.BOX_CODER: ResidualCoder
+2020-10-07 11:10:26,715   INFO  
+cfg.MODEL.DENSE_HEAD.LOSS_CONFIG = edict()
+2020-10-07 11:10:26,715   INFO  
+cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS = edict()
+2020-10-07 11:10:26,715   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.cls_weight: 1.0
+2020-10-07 11:10:26,715   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.loc_weight: 2.0
+2020-10-07 11:10:26,715   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.dir_weight: 0.2
+2020-10-07 11:10:26,715   INFO  cfg.MODEL.DENSE_HEAD.LOSS_CONFIG.LOSS_WEIGHTS.code_weights: [1.0, 1.0, 1.0, 1.0, 1.0, 1.0, 1.0]
+2020-10-07 11:10:26,715   INFO  
+cfg.MODEL.POST_PROCESSING = edict()
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.RECALL_THRESH_LIST: [0.3, 0.5, 0.7]
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.SCORE_THRESH: 0.1
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.OUTPUT_RAW_SCORE: False
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.EVAL_METRIC: kitti
+2020-10-07 11:10:26,716   INFO  
+cfg.MODEL.POST_PROCESSING.NMS_CONFIG = edict()
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.MULTI_CLASSES_NMS: False
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_TYPE: nms_gpu
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_THRESH: 0.01
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_PRE_MAXSIZE: 4096
+2020-10-07 11:10:26,716   INFO  cfg.MODEL.POST_PROCESSING.NMS_CONFIG.NMS_POST_MAXSIZE: 500
+2020-10-07 11:10:26,717   INFO  
+cfg.OPTIMIZATION = edict()
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.BATCH_SIZE_PER_GPU: 2
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.NUM_EPOCHS: 80
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.OPTIMIZER: adam_onecycle
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.LR: 0.003
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.WEIGHT_DECAY: 0.01
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.MOMENTUM: 0.9
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.MOMS: [0.95, 0.85]
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.PCT_START: 0.4
+2020-10-07 11:10:26,717   INFO  cfg.OPTIMIZATION.DIV_FACTOR: 10
+2020-10-07 11:10:26,718   INFO  cfg.OPTIMIZATION.DECAY_STEP_LIST: [35, 45]
+2020-10-07 11:10:26,718   INFO  cfg.OPTIMIZATION.LR_DECAY: 0.1
+2020-10-07 11:10:26,718   INFO  cfg.OPTIMIZATION.LR_CLIP: 1e-07
+2020-10-07 11:10:26,718   INFO  cfg.OPTIMIZATION.LR_WARMUP: False
+2020-10-07 11:10:26,718   INFO  cfg.OPTIMIZATION.WARMUP_EPOCH: 1
+2020-10-07 11:10:26,718   INFO  cfg.OPTIMIZATION.GRAD_NORM_CLIP: 10
+2020-10-07 11:10:26,718   INFO  cfg.TAG: mix_anchor_agg_memory
+2020-10-07 11:10:26,718   INFO  cfg.EXP_GROUP_PATH: cfgs/kitti_models
+2020-10-07 11:10:26,722   INFO  Loading KITTI dataset
+2020-10-07 11:10:27,030   INFO  Total samples for KITTI dataset: 3769
+2020-10-07 11:10:32,991   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_70.pth to CPU
+2020-10-07 11:10:33,444   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:10:33,804   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:10:33,911   INFO  *************** EPOCH 70 EVALUATION *****************
+2020-10-07 11:12:25,334   INFO  *************** Performance of EPOCH 70 *****************
+2020-10-07 11:12:25,335   INFO  Generate label finished(sec_per_example: 0.0295 second).
+2020-10-07 11:12:25,335   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:12:25,335   INFO  recall_rcnn_0.3: 0.929897
+2020-10-07 11:12:25,335   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:12:25,335   INFO  recall_rcnn_0.5: 0.867597
+2020-10-07 11:12:25,335   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:12:25,335   INFO  recall_rcnn_0.7: 0.621071
+2020-10-07 11:12:25,338   INFO  Average predicted number of objects(3769 samples): 19.190
+2020-10-07 11:13:33,170   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:90.3966, 88.7148, 87.4469
+bev  AP:88.5345, 84.5581, 82.0121
+3d   AP:84.7414, 75.4291, 71.1331
+aos  AP:90.35, 88.30, 86.85
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:94.9696, 90.7181, 88.4071
+bev  AP:90.7062, 86.2351, 83.9766
+3d   AP:85.7332, 74.9334, 72.1644
+aos  AP:94.91, 90.26, 87.79
+Car AP@0.70, 0.50, 0.50:
+bbox AP:90.3966, 88.7148, 87.4469
+bev  AP:90.4712, 89.4219, 88.7278
+3d   AP:90.4712, 89.2601, 88.4358
+aos  AP:90.35, 88.30, 86.85
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:94.9696, 90.7181, 88.4071
+bev  AP:95.1551, 93.3605, 92.2419
+3d   AP:95.1188, 92.5211, 90.7659
+aos  AP:94.91, 90.26, 87.79
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:63.9684, 58.1072, 54.5671
+bev  AP:58.7984, 52.4483, 48.7796
+3d   AP:53.5692, 47.0107, 42.8466
+aos  AP:47.13, 43.13, 40.27
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:64.0016, 57.4254, 53.9519
+bev  AP:58.6648, 51.4736, 46.9646
+3d   AP:52.3526, 45.4960, 40.9244
+aos  AP:45.19, 40.47, 37.65
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:63.9684, 58.1072, 54.5671
+bev  AP:70.7706, 65.3189, 62.1862
+3d   AP:70.6504, 64.9693, 61.8439
+aos  AP:47.13, 43.13, 40.27
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:64.0016, 57.4254, 53.9519
+bev  AP:71.8070, 65.9799, 62.0582
+3d   AP:71.6793, 65.6210, 61.7143
+aos  AP:45.19, 40.47, 37.65
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:84.4882, 69.8812, 66.6148
+bev  AP:81.6411, 63.1228, 59.9251
+3d   AP:75.7630, 57.9757, 54.6125
+aos  AP:84.01, 66.89, 63.68
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:86.7588, 70.5590, 66.8705
+bev  AP:83.2322, 62.9213, 59.3203
+3d   AP:77.0840, 57.1699, 53.7839
+aos  AP:86.18, 67.30, 63.68
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:84.4882, 69.8812, 66.6148
+bev  AP:83.9265, 67.8038, 64.5877
+3d   AP:83.9265, 67.6123, 64.5335
+aos  AP:84.01, 66.89, 63.68
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:86.7588, 70.5590, 66.8705
+bev  AP:86.4148, 68.2754, 64.8797
+3d   AP:86.4146, 68.1415, 64.6407
+aos  AP:86.18, 67.30, 63.68
+
+2020-10-07 11:13:33,189   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_70/val
+2020-10-07 11:13:33,191   INFO  ****************Evaluation done.*****************
+2020-10-07 11:13:33,237   INFO  Epoch 70 has been evaluated
+2020-10-07 11:13:33,243   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_71.pth to CPU
+2020-10-07 11:13:33,671   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:13:33,993   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:13:34,028   INFO  *************** EPOCH 71 EVALUATION *****************
+2020-10-07 11:15:26,900   INFO  *************** Performance of EPOCH 71 *****************
+2020-10-07 11:15:26,900   INFO  Generate label finished(sec_per_example: 0.0299 second).
+2020-10-07 11:15:26,900   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:15:26,900   INFO  recall_rcnn_0.3: 0.927221
+2020-10-07 11:15:26,900   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:15:26,901   INFO  recall_rcnn_0.5: 0.862358
+2020-10-07 11:15:26,901   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:15:26,901   INFO  recall_rcnn_0.7: 0.619590
+2020-10-07 11:15:26,904   INFO  Average predicted number of objects(3769 samples): 21.363
+2020-10-07 11:16:11,395   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:94.2244, 89.3799, 88.2985
+bev  AP:89.0133, 86.5666, 82.3453
+3d   AP:85.4691, 76.2282, 71.5201
+aos  AP:94.18, 89.13, 87.90
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:96.9476, 91.5970, 90.3294
+bev  AP:92.6539, 87.2040, 84.5249
+3d   AP:86.5621, 76.9752, 72.7554
+aos  AP:96.91, 91.33, 89.90
+Car AP@0.70, 0.50, 0.50:
+bbox AP:94.2244, 89.3799, 88.2985
+bev  AP:94.4106, 89.8348, 89.1519
+3d   AP:94.3644, 89.7240, 88.9533
+aos  AP:94.18, 89.13, 87.90
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:96.9476, 91.5970, 90.3294
+bev  AP:97.4137, 94.1933, 93.3162
+3d   AP:97.3502, 94.0304, 92.4367
+aos  AP:96.91, 91.33, 89.90
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:64.1890, 58.4305, 54.6602
+bev  AP:58.5826, 52.0522, 48.7162
+3d   AP:54.2182, 47.5098, 43.1827
+aos  AP:45.93, 42.38, 39.52
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:64.0028, 57.5703, 53.6179
+bev  AP:58.4757, 51.4199, 46.6738
+3d   AP:53.0444, 46.0528, 41.3458
+aos  AP:43.30, 39.26, 36.41
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:64.1890, 58.4305, 54.6602
+bev  AP:71.4424, 65.7678, 62.2219
+3d   AP:71.3863, 65.3714, 61.8155
+aos  AP:45.93, 42.38, 39.52
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:64.0028, 57.5703, 53.6179
+bev  AP:72.6212, 66.3621, 62.2980
+3d   AP:72.5510, 65.9756, 61.9448
+aos  AP:43.30, 39.26, 36.41
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:86.0306, 71.8946, 68.3559
+bev  AP:83.2970, 65.1391, 61.5256
+3d   AP:75.4641, 57.8803, 54.9077
+aos  AP:85.69, 69.33, 66.01
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:89.3798, 72.4025, 68.8928
+bev  AP:86.2062, 65.3537, 61.5588
+3d   AP:77.5829, 57.3550, 53.8655
+aos  AP:88.97, 69.70, 66.22
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:86.0306, 71.8946, 68.3559
+bev  AP:87.1582, 69.4459, 65.9032
+3d   AP:87.1582, 69.4459, 65.9032
+aos  AP:85.69, 69.33, 66.01
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:89.3798, 72.4025, 68.8928
+bev  AP:89.1305, 69.7702, 66.2096
+3d   AP:89.1305, 69.7702, 66.2096
+aos  AP:88.97, 69.70, 66.22
+
+2020-10-07 11:16:11,402   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_71/val
+2020-10-07 11:16:11,402   INFO  ****************Evaluation done.*****************
+2020-10-07 11:16:11,438   INFO  Epoch 71 has been evaluated
+2020-10-07 11:16:11,444   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_72.pth to CPU
+2020-10-07 11:16:11,867   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:16:12,190   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:16:12,224   INFO  *************** EPOCH 72 EVALUATION *****************
+2020-10-07 11:18:06,198   INFO  *************** Performance of EPOCH 72 *****************
+2020-10-07 11:18:06,198   INFO  Generate label finished(sec_per_example: 0.0302 second).
+2020-10-07 11:18:06,198   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:18:06,199   INFO  recall_rcnn_0.3: 0.925456
+2020-10-07 11:18:06,199   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:18:06,199   INFO  recall_rcnn_0.5: 0.861333
+2020-10-07 11:18:06,199   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:18:06,199   INFO  recall_rcnn_0.7: 0.623804
+2020-10-07 11:18:06,202   INFO  Average predicted number of objects(3769 samples): 15.568
+2020-10-07 11:18:44,851   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:94.5582, 89.4014, 88.3685
+bev  AP:88.8442, 86.1891, 82.8999
+3d   AP:85.4554, 76.1876, 73.4509
+aos  AP:94.52, 89.10, 87.92
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:97.1601, 91.8850, 90.7747
+bev  AP:91.1993, 87.1498, 84.5716
+3d   AP:86.5484, 77.1580, 74.2593
+aos  AP:97.12, 91.55, 90.28
+Car AP@0.70, 0.50, 0.50:
+bbox AP:94.5582, 89.4014, 88.3685
+bev  AP:94.7036, 89.8396, 89.1740
+3d   AP:94.6435, 89.6961, 88.9402
+aos  AP:94.52, 89.10, 87.92
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:97.1601, 91.8850, 90.7747
+bev  AP:97.5063, 94.4407, 93.5069
+3d   AP:97.4010, 94.0668, 91.5525
+aos  AP:97.12, 91.55, 90.28
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:64.9312, 59.4859, 56.3217
+bev  AP:58.6653, 52.9029, 49.6517
+3d   AP:53.1299, 47.2481, 43.3451
+aos  AP:48.83, 44.93, 42.39
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:64.8377, 58.9365, 55.5744
+bev  AP:58.4934, 52.1767, 47.8428
+3d   AP:51.8766, 45.7696, 41.2818
+aos  AP:46.85, 42.56, 39.78
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:64.9312, 59.4859, 56.3217
+bev  AP:71.9051, 67.7963, 63.6501
+3d   AP:71.8660, 67.6458, 63.2966
+aos  AP:48.83, 44.93, 42.39
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:64.8377, 58.9365, 55.5744
+bev  AP:73.1361, 67.9234, 64.0908
+3d   AP:73.0883, 67.7188, 63.5587
+aos  AP:46.85, 42.56, 39.78
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:85.8320, 70.2251, 68.2205
+bev  AP:83.2631, 64.1566, 60.6815
+3d   AP:75.9279, 57.0375, 54.5903
+aos  AP:84.86, 66.42, 64.50
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:87.9738, 71.6003, 68.4323
+bev  AP:84.7876, 64.1724, 60.6732
+3d   AP:77.0562, 56.4147, 53.4829
+aos  AP:86.97, 67.34, 64.29
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:85.8320, 70.2251, 68.2205
+bev  AP:85.3522, 69.1894, 66.1240
+3d   AP:85.3522, 69.0416, 66.1000
+aos  AP:84.86, 66.42, 64.50
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:87.9738, 71.6003, 68.4323
+bev  AP:88.0305, 69.8661, 66.2941
+3d   AP:88.0293, 69.8079, 66.2435
+aos  AP:86.97, 67.34, 64.29
+
+2020-10-07 11:18:44,865   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_72/val
+2020-10-07 11:18:44,865   INFO  ****************Evaluation done.*****************
+2020-10-07 11:18:44,907   INFO  Epoch 72 has been evaluated
+2020-10-07 11:18:44,912   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_73.pth to CPU
+2020-10-07 11:18:45,377   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:18:45,701   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:18:45,738   INFO  *************** EPOCH 73 EVALUATION *****************
+2020-10-07 11:20:38,605   INFO  *************** Performance of EPOCH 73 *****************
+2020-10-07 11:20:38,605   INFO  Generate label finished(sec_per_example: 0.0299 second).
+2020-10-07 11:20:38,605   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:20:38,605   INFO  recall_rcnn_0.3: 0.931150
+2020-10-07 11:20:38,606   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:20:38,606   INFO  recall_rcnn_0.5: 0.869476
+2020-10-07 11:20:38,606   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:20:38,606   INFO  recall_rcnn_0.7: 0.628929
+2020-10-07 11:20:38,611   INFO  Average predicted number of objects(3769 samples): 16.519
+2020-10-07 11:21:22,826   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:94.2334, 89.5278, 88.4544
+bev  AP:89.3676, 86.8715, 83.0276
+3d   AP:86.2814, 76.6731, 74.4604
+aos  AP:94.20, 89.24, 88.00
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:96.7264, 91.9041, 90.8696
+bev  AP:92.7815, 87.5806, 84.9584
+3d   AP:87.1347, 77.7380, 74.8190
+aos  AP:96.69, 91.59, 90.37
+Car AP@0.70, 0.50, 0.50:
+bbox AP:94.2334, 89.5278, 88.4544
+bev  AP:94.3244, 89.8362, 89.1450
+3d   AP:94.2750, 89.7315, 88.9458
+aos  AP:94.20, 89.24, 88.00
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:96.7264, 91.9041, 90.8696
+bev  AP:97.1574, 94.3381, 93.4780
+3d   AP:97.0905, 94.0817, 91.5534
+aos  AP:96.69, 91.59, 90.37
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:65.4878, 59.4797, 55.9180
+bev  AP:57.9332, 52.0466, 48.7627
+3d   AP:53.1340, 47.3817, 43.2960
+aos  AP:47.84, 43.65, 41.14
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:65.3317, 58.7313, 55.3955
+bev  AP:57.5527, 50.8211, 46.9551
+3d   AP:51.8408, 45.6549, 41.4689
+aos  AP:45.28, 40.76, 38.30
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:65.4878, 59.4797, 55.9180
+bev  AP:71.7514, 66.0207, 62.9413
+3d   AP:71.6266, 65.7747, 62.6349
+aos  AP:47.84, 43.65, 41.14
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:65.3317, 58.7313, 55.3955
+bev  AP:72.8401, 66.6614, 62.9113
+3d   AP:72.6947, 66.3792, 62.6196
+aos  AP:45.28, 40.76, 38.30
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:84.5145, 72.3152, 68.3110
+bev  AP:82.1944, 64.8080, 60.8343
+3d   AP:75.5671, 57.9458, 54.8242
+aos  AP:84.04, 69.50, 65.67
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:87.4836, 72.9419, 69.4309
+bev  AP:84.7922, 64.7800, 60.7622
+3d   AP:76.7504, 57.2995, 54.1396
+aos  AP:86.93, 69.92, 66.42
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:84.5145, 72.3152, 68.3110
+bev  AP:83.7619, 69.7995, 65.8541
+3d   AP:83.7619, 69.7711, 65.8528
+aos  AP:84.04, 69.50, 65.67
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:87.4836, 72.9419, 69.4309
+bev  AP:86.9346, 70.2938, 66.6498
+3d   AP:86.9342, 70.2783, 66.6283
+aos  AP:86.93, 69.92, 66.42
+
+2020-10-07 11:21:22,841   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_73/val
+2020-10-07 11:21:22,841   INFO  ****************Evaluation done.*****************
+2020-10-07 11:21:22,880   INFO  Epoch 73 has been evaluated
+2020-10-07 11:21:22,885   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_74.pth to CPU
+2020-10-07 11:21:23,346   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:21:23,679   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:21:23,717   INFO  *************** EPOCH 74 EVALUATION *****************
+2020-10-07 11:23:19,569   INFO  *************** Performance of EPOCH 74 *****************
+2020-10-07 11:23:19,569   INFO  Generate label finished(sec_per_example: 0.0307 second).
+2020-10-07 11:23:19,569   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:23:19,570   INFO  recall_rcnn_0.3: 0.926310
+2020-10-07 11:23:19,570   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:23:19,570   INFO  recall_rcnn_0.5: 0.862870
+2020-10-07 11:23:19,570   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:23:19,570   INFO  recall_rcnn_0.7: 0.621526
+2020-10-07 11:23:19,573   INFO  Average predicted number of objects(3769 samples): 16.058
+2020-10-07 11:23:58,653   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:90.6479, 89.4164, 88.3727
+bev  AP:89.1631, 86.2412, 83.0904
+3d   AP:85.7891, 76.4354, 72.2755
+aos  AP:90.63, 89.16, 87.97
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:95.4984, 91.8245, 90.4810
+bev  AP:91.5084, 87.2969, 84.8597
+3d   AP:86.9700, 77.0466, 73.2790
+aos  AP:95.47, 91.55, 90.05
+Car AP@0.70, 0.50, 0.50:
+bbox AP:90.6479, 89.4164, 88.3727
+bev  AP:94.2372, 89.8429, 89.2065
+3d   AP:94.1925, 89.7207, 89.0133
+aos  AP:90.63, 89.16, 87.97
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:95.4984, 91.8245, 90.4810
+bev  AP:96.9574, 94.3366, 93.3886
+3d   AP:96.8213, 93.9648, 91.5894
+aos  AP:95.47, 91.55, 90.05
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:64.0895, 58.7989, 55.4890
+bev  AP:58.4113, 52.5379, 48.0190
+3d   AP:53.0176, 47.3682, 43.3993
+aos  AP:46.46, 43.28, 41.03
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:63.8600, 58.1041, 54.6252
+bev  AP:57.8000, 51.4632, 46.7591
+3d   AP:52.1189, 45.8723, 41.3749
+aos  AP:44.32, 40.60, 38.15
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:64.0895, 58.7989, 55.4890
+bev  AP:71.3615, 67.4798, 63.3214
+3d   AP:71.2154, 66.4601, 62.9510
+aos  AP:46.46, 43.28, 41.03
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:63.8600, 58.1041, 54.6252
+bev  AP:72.5702, 67.6331, 63.4193
+3d   AP:72.3617, 67.1220, 63.0891
+aos  AP:44.32, 40.60, 38.15
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:85.1360, 68.9662, 66.7980
+bev  AP:82.6344, 63.8196, 60.8775
+3d   AP:78.4633, 57.9724, 54.6922
+aos  AP:84.36, 65.70, 63.60
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:87.9605, 70.2809, 67.1080
+bev  AP:84.2905, 64.3159, 60.4222
+3d   AP:79.2848, 57.5742, 54.1358
+aos  AP:87.13, 66.68, 63.63
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:85.1360, 68.9662, 66.7980
+bev  AP:85.2425, 67.3836, 64.8841
+3d   AP:85.2422, 67.3823, 64.8841
+aos  AP:84.36, 65.70, 63.60
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:87.9605, 70.2809, 67.1080
+bev  AP:87.6219, 68.2906, 64.9427
+3d   AP:87.6217, 68.2793, 64.9329
+aos  AP:87.13, 66.68, 63.63
+
+2020-10-07 11:23:58,660   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_74/val
+2020-10-07 11:23:58,660   INFO  ****************Evaluation done.*****************
+2020-10-07 11:23:58,699   INFO  Epoch 74 has been evaluated
+2020-10-07 11:23:58,703   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_75.pth to CPU
+2020-10-07 11:23:59,168   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:23:59,493   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:23:59,530   INFO  *************** EPOCH 75 EVALUATION *****************
+2020-10-07 11:25:52,437   INFO  *************** Performance of EPOCH 75 *****************
+2020-10-07 11:25:52,437   INFO  Generate label finished(sec_per_example: 0.0300 second).
+2020-10-07 11:25:52,437   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:25:52,437   INFO  recall_rcnn_0.3: 0.931150
+2020-10-07 11:25:52,437   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:25:52,437   INFO  recall_rcnn_0.5: 0.865262
+2020-10-07 11:25:52,437   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:25:52,437   INFO  recall_rcnn_0.7: 0.624260
+2020-10-07 11:25:52,441   INFO  Average predicted number of objects(3769 samples): 17.398
+2020-10-07 11:26:32,693   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:90.6513, 89.3733, 88.3123
+bev  AP:89.1126, 86.0555, 82.8465
+3d   AP:85.9228, 76.6177, 74.5667
+aos  AP:90.63, 89.09, 87.86
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:95.6681, 91.7523, 90.4840
+bev  AP:91.6110, 87.1835, 84.7598
+3d   AP:87.0208, 77.6233, 74.8737
+aos  AP:95.63, 91.45, 89.99
+Car AP@0.70, 0.50, 0.50:
+bbox AP:90.6513, 89.3733, 88.3123
+bev  AP:94.7533, 89.8246, 89.1843
+3d   AP:94.7536, 89.7262, 88.9730
+aos  AP:90.63, 89.09, 87.86
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:95.6681, 91.7523, 90.4840
+bev  AP:97.3982, 94.2796, 93.4785
+3d   AP:97.3273, 93.9670, 91.5522
+aos  AP:95.63, 91.45, 89.99
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:65.4249, 59.2488, 55.8266
+bev  AP:58.3200, 52.1302, 48.5921
+3d   AP:51.0153, 45.9871, 41.8743
+aos  AP:48.86, 43.94, 41.43
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:65.2696, 58.9022, 55.3267
+bev  AP:57.7077, 51.2585, 46.6625
+3d   AP:49.9241, 44.3861, 39.8466
+aos  AP:46.50, 41.86, 38.98
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:65.4249, 59.2488, 55.8266
+bev  AP:72.0329, 67.3754, 63.2854
+3d   AP:71.9699, 67.0188, 63.0362
+aos  AP:48.86, 43.94, 41.43
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:65.2696, 58.9022, 55.3267
+bev  AP:73.3466, 67.7163, 63.7558
+3d   AP:73.2830, 67.3816, 63.2416
+aos  AP:46.50, 41.86, 38.98
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:85.2990, 71.0925, 67.9059
+bev  AP:82.6832, 64.6874, 60.5762
+3d   AP:76.3323, 57.8996, 54.7750
+aos  AP:84.39, 68.06, 64.98
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:88.5365, 71.9653, 68.4442
+bev  AP:84.6695, 64.6263, 60.7539
+3d   AP:77.3061, 57.3833, 54.1554
+aos  AP:87.44, 68.65, 65.20
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:85.2990, 71.0925, 67.9059
+bev  AP:84.7703, 68.7224, 65.6589
+3d   AP:84.7703, 68.7224, 65.6589
+aos  AP:84.39, 68.06, 64.98
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:88.5365, 71.9653, 68.4442
+bev  AP:87.5313, 69.4694, 66.2633
+3d   AP:87.5313, 69.4694, 66.2633
+aos  AP:87.44, 68.65, 65.20
+
+2020-10-07 11:26:32,706   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_75/val
+2020-10-07 11:26:32,706   INFO  ****************Evaluation done.*****************
+2020-10-07 11:26:32,743   INFO  Epoch 75 has been evaluated
+2020-10-07 11:26:32,748   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_76.pth to CPU
+2020-10-07 11:26:33,181   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:26:33,504   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:26:33,542   INFO  *************** EPOCH 76 EVALUATION *****************
+2020-10-07 11:28:28,455   INFO  *************** Performance of EPOCH 76 *****************
+2020-10-07 11:28:28,456   INFO  Generate label finished(sec_per_example: 0.0305 second).
+2020-10-07 11:28:28,456   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:28:28,456   INFO  recall_rcnn_0.3: 0.927790
+2020-10-07 11:28:28,456   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:28:28,456   INFO  recall_rcnn_0.5: 0.864579
+2020-10-07 11:28:28,456   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:28:28,456   INFO  recall_rcnn_0.7: 0.623918
+2020-10-07 11:28:28,459   INFO  Average predicted number of objects(3769 samples): 17.073
+2020-10-07 11:29:08,228   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:93.7973, 89.2617, 88.3093
+bev  AP:89.0147, 86.3558, 82.8638
+3d   AP:85.5721, 76.1847, 73.5120
+aos  AP:93.76, 89.02, 87.90
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:96.6925, 91.6177, 90.6036
+bev  AP:91.3433, 87.1730, 84.7583
+3d   AP:86.5022, 77.1279, 74.3187
+aos  AP:96.66, 91.34, 90.15
+Car AP@0.70, 0.50, 0.50:
+bbox AP:93.7973, 89.2617, 88.3093
+bev  AP:93.9530, 89.7319, 89.1162
+3d   AP:93.8950, 89.5830, 88.8683
+aos  AP:93.76, 89.02, 87.90
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:96.6925, 91.6177, 90.6036
+bev  AP:97.0257, 94.1793, 93.4152
+3d   AP:96.9584, 93.8110, 91.4051
+aos  AP:96.66, 91.34, 90.15
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:65.5662, 59.5791, 56.1314
+bev  AP:59.1759, 53.3695, 49.5698
+3d   AP:53.6065, 47.6827, 43.2071
+aos  AP:49.37, 44.93, 42.22
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:65.4389, 59.0886, 55.6662
+bev  AP:59.2881, 52.4762, 47.9229
+3d   AP:52.6137, 46.1170, 41.6054
+aos  AP:47.06, 42.53, 39.84
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:65.5662, 59.5791, 56.1314
+bev  AP:72.5701, 67.6756, 63.4648
+3d   AP:72.4217, 67.1783, 63.1101
+aos  AP:49.37, 44.93, 42.22
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:65.4389, 59.0886, 55.6662
+bev  AP:73.6887, 67.8967, 63.9307
+3d   AP:73.5314, 67.4109, 63.2212
+aos  AP:47.06, 42.53, 39.84
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:86.0447, 70.8058, 67.3062
+bev  AP:83.1606, 64.4404, 60.3709
+3d   AP:76.1791, 57.6751, 55.1643
+aos  AP:85.43, 68.02, 64.59
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:88.6406, 71.4776, 67.9290
+bev  AP:85.1838, 64.3359, 60.4056
+3d   AP:77.7308, 57.4555, 54.0451
+aos  AP:87.90, 68.42, 64.99
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:86.0447, 70.8058, 67.3062
+bev  AP:86.4716, 68.6229, 65.0105
+3d   AP:86.4716, 68.6214, 65.0105
+aos  AP:85.43, 68.02, 64.59
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:88.6406, 71.4776, 67.9290
+bev  AP:88.5622, 69.1990, 65.5808
+3d   AP:88.5622, 69.1986, 65.5804
+aos  AP:87.90, 68.42, 64.99
+
+2020-10-07 11:29:08,243   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_76/val
+2020-10-07 11:29:08,243   INFO  ****************Evaluation done.*****************
+2020-10-07 11:29:08,279   INFO  Epoch 76 has been evaluated
+2020-10-07 11:29:08,284   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_77.pth to CPU
+2020-10-07 11:29:08,722   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:29:09,046   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:29:09,082   INFO  *************** EPOCH 77 EVALUATION *****************
+2020-10-07 11:31:03,846   INFO  *************** Performance of EPOCH 77 *****************
+2020-10-07 11:31:03,846   INFO  Generate label finished(sec_per_example: 0.0304 second).
+2020-10-07 11:31:03,846   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:31:03,846   INFO  recall_rcnn_0.3: 0.924772
+2020-10-07 11:31:03,847   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:31:03,847   INFO  recall_rcnn_0.5: 0.860080
+2020-10-07 11:31:03,847   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:31:03,847   INFO  recall_rcnn_0.7: 0.622722
+2020-10-07 11:31:03,850   INFO  Average predicted number of objects(3769 samples): 16.936
+2020-10-07 11:31:45,750   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:93.8930, 89.2561, 88.1619
+bev  AP:88.9176, 85.9984, 82.7400
+3d   AP:85.4970, 76.2283, 72.6002
+aos  AP:93.83, 88.98, 87.74
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:96.4289, 91.6211, 90.3248
+bev  AP:91.1885, 86.9925, 84.5669
+3d   AP:86.5646, 77.1332, 74.1277
+aos  AP:96.37, 91.31, 89.86
+Car AP@0.70, 0.50, 0.50:
+bbox AP:93.8930, 89.2561, 88.1619
+bev  AP:94.0341, 89.7233, 89.0701
+3d   AP:93.9887, 89.6251, 88.8615
+aos  AP:93.83, 88.98, 87.74
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:96.4289, 91.6211, 90.3248
+bev  AP:97.1424, 94.1447, 93.2358
+3d   AP:97.0396, 93.8350, 91.4380
+aos  AP:96.37, 91.31, 89.86
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:64.0527, 58.0942, 54.4884
+bev  AP:56.9756, 51.1368, 46.8273
+3d   AP:52.7712, 46.6457, 42.2368
+aos  AP:48.28, 43.77, 41.12
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:63.7929, 57.4822, 53.6841
+bev  AP:56.3759, 49.8483, 45.3984
+3d   AP:51.6774, 44.8963, 40.0809
+aos  AP:46.05, 41.49, 38.46
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:64.0527, 58.0942, 54.4884
+bev  AP:71.2247, 66.6851, 62.2458
+3d   AP:71.2111, 65.6942, 62.0587
+aos  AP:48.28, 43.77, 41.12
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:63.7929, 57.4822, 53.6841
+bev  AP:72.3744, 66.6178, 62.3903
+3d   AP:72.3610, 66.1512, 62.0985
+aos  AP:46.05, 41.49, 38.46
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:83.9297, 68.1866, 65.6695
+bev  AP:81.1459, 61.8915, 58.4942
+3d   AP:74.5812, 56.5339, 53.3006
+aos  AP:82.92, 65.25, 62.84
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:85.8187, 69.1988, 65.9655
+bev  AP:82.3114, 61.8026, 57.9181
+3d   AP:75.8439, 56.0863, 52.5746
+aos  AP:84.77, 65.95, 62.76
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:83.9297, 68.1866, 65.6695
+bev  AP:83.6976, 67.0980, 64.1666
+3d   AP:83.6976, 67.0980, 64.1666
+aos  AP:82.92, 65.25, 62.84
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:85.8187, 69.1988, 65.9655
+bev  AP:86.6397, 67.8233, 64.4246
+3d   AP:86.6397, 67.8233, 64.4246
+aos  AP:84.77, 65.95, 62.76
+
+2020-10-07 11:31:45,764   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_77/val
+2020-10-07 11:31:45,765   INFO  ****************Evaluation done.*****************
+2020-10-07 11:31:45,803   INFO  Epoch 77 has been evaluated
+2020-10-07 11:31:45,808   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_78.pth to CPU
+2020-10-07 11:31:46,248   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:31:46,580   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:31:46,618   INFO  *************** EPOCH 78 EVALUATION *****************
+2020-10-07 11:33:41,468   INFO  *************** Performance of EPOCH 78 *****************
+2020-10-07 11:33:41,468   INFO  Generate label finished(sec_per_example: 0.0305 second).
+2020-10-07 11:33:41,468   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:33:41,468   INFO  recall_rcnn_0.3: 0.928531
+2020-10-07 11:33:41,468   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:33:41,469   INFO  recall_rcnn_0.5: 0.864522
+2020-10-07 11:33:41,469   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:33:41,469   INFO  recall_rcnn_0.7: 0.626481
+2020-10-07 11:33:41,472   INFO  Average predicted number of objects(3769 samples): 16.631
+2020-10-07 11:34:21,435   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:94.2487, 89.3743, 88.4025
+bev  AP:89.1537, 86.5418, 82.9200
+3d   AP:86.1242, 76.6145, 74.6756
+aos  AP:94.20, 89.10, 87.97
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:96.7371, 91.7597, 90.6680
+bev  AP:91.6482, 87.3358, 84.8736
+3d   AP:87.0634, 77.7115, 74.8990
+aos  AP:96.69, 91.46, 90.20
+Car AP@0.70, 0.50, 0.50:
+bbox AP:94.2487, 89.3743, 88.4025
+bev  AP:94.3339, 89.7930, 89.1542
+3d   AP:94.2856, 89.6856, 88.9530
+aos  AP:94.20, 89.10, 87.97
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:96.7371, 91.7597, 90.6680
+bev  AP:97.1614, 94.2615, 93.5091
+3d   AP:97.1021, 93.9731, 91.5243
+aos  AP:96.69, 91.46, 90.20
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:64.7954, 59.1885, 55.5922
+bev  AP:58.1848, 52.1489, 48.7616
+3d   AP:52.6492, 46.3483, 42.1712
+aos  AP:50.33, 45.63, 42.70
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:64.6361, 58.7317, 55.1788
+bev  AP:57.8208, 51.3142, 46.8200
+3d   AP:51.3643, 44.6589, 40.0547
+aos  AP:48.45, 43.77, 40.54
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:64.7954, 59.1885, 55.5922
+bev  AP:71.8729, 67.4887, 63.0827
+3d   AP:71.7398, 67.2528, 62.8634
+aos  AP:50.33, 45.63, 42.70
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:64.6361, 58.7317, 55.1788
+bev  AP:72.8519, 67.5305, 63.5872
+3d   AP:72.6917, 67.1924, 63.0249
+aos  AP:48.45, 43.77, 40.54
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:85.7852, 70.7111, 67.6148
+bev  AP:82.8036, 63.8670, 60.0337
+3d   AP:76.9636, 57.6027, 54.4404
+aos  AP:85.03, 67.96, 64.89
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:88.7896, 71.4578, 67.7905
+bev  AP:84.4701, 63.8793, 60.0249
+3d   AP:78.4653, 57.3676, 53.9553
+aos  AP:87.93, 68.46, 64.87
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:85.7852, 70.7111, 67.6148
+bev  AP:86.5341, 68.3879, 65.4442
+3d   AP:86.5341, 68.3849, 65.4442
+aos  AP:85.03, 67.96, 64.89
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:88.7896, 71.4578, 67.7905
+bev  AP:88.6669, 68.9680, 65.8277
+3d   AP:88.6669, 68.9671, 65.5483
+aos  AP:87.93, 68.46, 64.87
+
+2020-10-07 11:34:21,449   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_78/val
+2020-10-07 11:34:21,449   INFO  ****************Evaluation done.*****************
+2020-10-07 11:34:21,486   INFO  Epoch 78 has been evaluated
+2020-10-07 11:34:21,492   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_79.pth to CPU
+2020-10-07 11:34:21,929   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:34:22,253   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:34:22,289   INFO  *************** EPOCH 79 EVALUATION *****************
+2020-10-07 11:36:15,833   INFO  *************** Performance of EPOCH 79 *****************
+2020-10-07 11:36:15,834   INFO  Generate label finished(sec_per_example: 0.0301 second).
+2020-10-07 11:36:15,834   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:36:15,834   INFO  recall_rcnn_0.3: 0.928360
+2020-10-07 11:36:15,834   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:36:15,834   INFO  recall_rcnn_0.5: 0.865319
+2020-10-07 11:36:15,834   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:36:15,834   INFO  recall_rcnn_0.7: 0.626310
+2020-10-07 11:36:15,838   INFO  Average predicted number of objects(3769 samples): 17.114
+2020-10-07 11:36:59,382   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:90.5744, 89.3920, 88.4193
+bev  AP:89.0425, 86.3987, 83.0168
+3d   AP:85.6358, 76.5011, 74.7390
+aos  AP:90.54, 89.12, 88.01
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:95.4015, 91.7886, 90.6937
+bev  AP:91.3445, 87.3138, 84.8849
+3d   AP:86.7083, 77.5029, 74.9760
+aos  AP:95.36, 91.49, 90.24
+Car AP@0.70, 0.50, 0.50:
+bbox AP:90.5744, 89.3920, 88.4193
+bev  AP:94.1519, 89.8072, 89.1777
+3d   AP:94.1090, 89.7093, 88.9713
+aos  AP:90.54, 89.12, 88.01
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:95.4015, 91.7886, 90.6937
+bev  AP:96.8024, 94.2767, 93.4866
+3d   AP:96.7546, 93.9255, 91.5573
+aos  AP:95.36, 91.49, 90.24
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:64.9667, 59.5140, 56.1894
+bev  AP:58.4510, 52.4703, 48.9059
+3d   AP:52.8555, 47.1252, 43.2125
+aos  AP:49.64, 45.55, 43.07
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:64.9503, 58.9422, 55.5408
+bev  AP:58.1988, 51.6148, 47.1947
+3d   AP:51.6378, 45.6836, 41.2644
+aos  AP:47.57, 43.16, 40.48
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:64.9667, 59.5140, 56.1894
+bev  AP:72.1903, 67.6510, 63.6147
+3d   AP:71.9597, 67.4033, 63.3146
+aos  AP:49.64, 45.55, 43.07
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:64.9503, 58.9422, 55.5408
+bev  AP:73.4698, 67.9642, 63.8814
+3d   AP:73.2738, 67.6351, 63.3076
+aos  AP:47.57, 43.16, 40.48
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:84.9173, 69.9020, 67.4553
+bev  AP:82.7945, 64.3161, 60.2516
+3d   AP:79.1948, 59.3130, 56.2209
+aos  AP:84.10, 66.63, 64.18
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:87.4475, 70.8865, 67.7688
+bev  AP:85.0112, 64.0957, 60.2454
+3d   AP:79.8569, 58.8484, 55.1856
+aos  AP:86.56, 67.35, 64.30
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:84.9173, 69.9020, 67.4553
+bev  AP:86.9478, 68.9003, 65.5997
+3d   AP:86.9458, 68.8956, 65.5997
+aos  AP:84.10, 66.63, 64.18
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:87.4475, 70.8865, 67.7688
+bev  AP:88.7454, 69.3849, 65.7464
+3d   AP:88.7445, 69.3456, 65.6934
+aos  AP:86.56, 67.35, 64.30
+
+2020-10-07 11:36:59,396   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_79/val
+2020-10-07 11:36:59,396   INFO  ****************Evaluation done.*****************
+2020-10-07 11:36:59,435   INFO  Epoch 79 has been evaluated
+2020-10-07 11:36:59,440   INFO  ==> Loading parameters from checkpoint /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/ckpt/checkpoint_epoch_80.pth to CPU
+2020-10-07 11:36:59,854   INFO  ==> Checkpoint trained from version: pcdet+0.3.0+9e460da
+2020-10-07 11:37:00,189   INFO  ==> Done (loaded 170/170)
+2020-10-07 11:37:00,227   INFO  *************** EPOCH 80 EVALUATION *****************
+2020-10-07 11:38:56,134   INFO  *************** Performance of EPOCH 80 *****************
+2020-10-07 11:38:56,135   INFO  Generate label finished(sec_per_example: 0.0307 second).
+2020-10-07 11:38:56,135   INFO  recall_roi_0.3: 0.000000
+2020-10-07 11:38:56,135   INFO  recall_rcnn_0.3: 0.929670
+2020-10-07 11:38:56,135   INFO  recall_roi_0.5: 0.000000
+2020-10-07 11:38:56,135   INFO  recall_rcnn_0.5: 0.866913
+2020-10-07 11:38:56,135   INFO  recall_roi_0.7: 0.000000
+2020-10-07 11:38:56,135   INFO  recall_rcnn_0.7: 0.625626
+2020-10-07 11:38:56,139   INFO  Average predicted number of objects(3769 samples): 16.917
+2020-10-07 11:39:37,768   INFO  Car AP@0.70, 0.70, 0.70:
+bbox AP:90.6096, 89.3619, 88.4422
+bev  AP:89.0648, 86.5135, 82.8335
+3d   AP:85.8686, 76.5998, 74.6898
+aos  AP:90.58, 89.10, 88.03
+Car AP_R40@0.70, 0.70, 0.70:
+bbox AP:95.3945, 91.7258, 90.7952
+bev  AP:91.3803, 87.2484, 84.8251
+3d   AP:86.8932, 77.6716, 74.9903
+aos  AP:95.35, 91.44, 90.34
+Car AP@0.70, 0.50, 0.50:
+bbox AP:90.6096, 89.3619, 88.4422
+bev  AP:94.0209, 89.7483, 89.1615
+3d   AP:93.9803, 89.6637, 88.9903
+aos  AP:90.58, 89.10, 88.03
+Car AP_R40@0.70, 0.50, 0.50:
+bbox AP:95.3945, 91.7258, 90.7952
+bev  AP:96.7995, 94.2126, 93.4771
+3d   AP:96.7230, 93.9561, 91.5384
+aos  AP:95.35, 91.44, 90.34
+Pedestrian AP@0.50, 0.50, 0.50:
+bbox AP:64.8653, 59.1437, 55.5293
+bev  AP:58.1008, 52.5027, 49.0717
+3d   AP:52.4377, 46.8841, 42.7733
+aos  AP:48.35, 44.50, 41.81
+Pedestrian AP_R40@0.50, 0.50, 0.50:
+bbox AP:65.0595, 58.5758, 55.0259
+bev  AP:57.8991, 51.5296, 47.3147
+3d   AP:51.0464, 45.1278, 40.9114
+aos  AP:46.41, 41.87, 39.16
+Pedestrian AP@0.50, 0.25, 0.25:
+bbox AP:64.8653, 59.1437, 55.5293
+bev  AP:72.0177, 67.2956, 63.2045
+3d   AP:71.7573, 67.1173, 62.8566
+aos  AP:48.35, 44.50, 41.81
+Pedestrian AP_R40@0.50, 0.25, 0.25:
+bbox AP:65.0595, 58.5758, 55.0259
+bev  AP:73.0093, 67.5098, 63.5971
+3d   AP:72.8339, 67.0941, 62.9970
+aos  AP:46.41, 41.87, 39.16
+Cyclist AP@0.50, 0.50, 0.50:
+bbox AP:84.7792, 70.8055, 67.0953
+bev  AP:81.7648, 63.5180, 59.8306
+3d   AP:76.7118, 58.5889, 55.5060
+aos  AP:84.15, 67.74, 64.19
+Cyclist AP_R40@0.50, 0.50, 0.50:
+bbox AP:87.1672, 70.9886, 67.4616
+bev  AP:83.8899, 63.7385, 59.9799
+3d   AP:78.1218, 58.1092, 54.8638
+aos  AP:86.51, 67.76, 64.32
+Cyclist AP@0.50, 0.25, 0.25:
+bbox AP:84.7792, 70.8055, 67.0953
+bev  AP:84.4189, 69.0157, 65.4568
+3d   AP:84.4189, 69.0157, 65.4568
+aos  AP:84.15, 67.74, 64.19
+Cyclist AP_R40@0.50, 0.25, 0.25:
+bbox AP:87.1672, 70.9886, 67.4616
+bev  AP:87.3654, 69.0149, 65.8444
+3d   AP:87.3654, 69.0149, 65.8444
+aos  AP:86.51, 67.76, 64.32
+
+2020-10-07 11:39:37,776   INFO  Result is save to /workspace/work/OpenPCDet/output/cfgs/kitti_models/mix_anchor_agg_memory/agg_mem1000/eval/eval_all_default/default/epoch_80/val
+2020-10-07 11:39:37,776   INFO  ****************Evaluation done.*****************
+2020-10-07 11:39:37,823   INFO  Epoch 80 has been evaluated
