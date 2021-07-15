@@ -51,7 +51,7 @@ For more information, checkout the project site [[website](https://cvlab.yonsei.
     python -m pcdet.datasets.kitti.kitti_dataset create_kitti_infos tools/cfgs/dataset_configs/kitti_dataset.yaml
     ```
 ## Training
-* The config files is in tools/cfgs/hvpr, and you can easily train your own model like:
+* The config files is in tools/cfgs/kitti_models, and you can easily train your own model like:
   ```bash
   cd tools
   sh scripts/train_hvpr.sh 
