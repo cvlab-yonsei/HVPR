@@ -84,7 +84,6 @@ def eval_one_epoch(cfg, model, dataloader, epoch_id, logger, dist_test=False, sa
     sec_per_example = (time.time() - start_time) / len(dataloader.dataset)
     sec_per_test = sec_per_test / len(dataloader.dataset)
     logger.info('Evaluation finished(sec_per_test: %.4f second).' % sec_per_test)
-    logger.info('Generate label finished(sec_per_example: %.4f second).' % sec_per_example)
 
     if cfg.LOCAL_RANK != 0:
         return {}

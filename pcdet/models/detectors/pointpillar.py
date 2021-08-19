@@ -39,9 +39,6 @@ class MixAnchor_Memory(Detector3DTemplate):
         self.module_list = self.build_networks()
 
     def forward(self, batch_dict):
-        # batch_dict = cur_module[0](batch_dict)
-        # import pdb; pdb.set_trace()
-        
 
         if self.training:
             for cur_module in self.module_list:
